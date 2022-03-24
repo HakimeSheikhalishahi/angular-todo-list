@@ -1,0 +1,15 @@
+@import "src/assets/style/_variables.scss";
+
+#footer {
+  background-color: $footer-bg-color;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+a {
+  font-weight: 500;
+  text-decoration: none;
+}
+.bi {
+    font-size: 25px;
+}

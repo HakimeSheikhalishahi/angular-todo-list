@@ -1,0 +1,61 @@
+@import "src/assets/style/_variables.scss";
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+}
+
+.btn-circle {
+  width: 50px;
+  height: 50px;
+  padding: 6px 0px;
+  text-align: center;
+  font-size: 20px;
+  line-height: 1.42857;
+}
+.float {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 35px 25px;
+}
+.state {
+  font-size: 20px;
+}
+.del-todo {
+  float: right;
+  &:hover {
+    color: red;
+  }
+}
+.list-group-item {
+  .action {
+    display: none;
+  }
+  &:hover {
+    .action {
+      display: inline;
+      .bi:hover {
+        color: red !important;
+      }
+    }
+  }
+}
+.edit {
+  font-size: 20px;
+  margin-right: 10px;
+  &:hover {
+    color: $accent-color;
+  }
+}
+.no-data {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  img {
+    width: 90%;
+    max-width: 400px;
+    opacity: 0.3;
+  }
+}

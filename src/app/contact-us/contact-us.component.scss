@@ -1,0 +1,17 @@
+@import "src/assets/style/_variables.scss";
+
+i {
+  font-size: 50px;
+  color: #CCCCCC;
+}
+a {
+  font-weight: 500;
+  color: $primary-color;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.p-icon {
+  margin-right: 20px;
+}
