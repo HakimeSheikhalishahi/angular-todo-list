@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <ngx-masonry *ngIf="todos.length" [options]="{ percentPosition: true}">
+    <ngx-masonry #masonry *ngIf="todos.length" [options]="{ percentPosition: true}">
         <div class="">
             <div ngxMasonryItem class="masonry-item  col-12 col-md-6 col-lg-3" *ngFor="let todo of todos">
                 <div class="card m-2" [style]="'background-color:'+todo.color">
@@ -43,10 +43,14 @@
                     </div>
                     <div class="card-footer text-muted">
                         <div class="d-flex flex-row justify-content-between">
-                            <div timeago [date]="todo.date"></div>
+                            <div class="d-flex flex-row">
+                                Created &nbsp;
+                                <div timeago [date]="todo.date"></div>
+                            </div>
                             <div class="d-flex flex-row justify-content-between">
                                 <i class="bi bi-pencil-fill edit mr-2" [routerLink]="'/to-do/'+todo.id"></i>
-                                <ngx-colors ngx-colors-trigger [(ngModel)]="todo.color" (ngModelChange)="edit(todo)" ></ngx-colors>
+                                <ngx-colors ngx-colors-trigger [(ngModel)]="todo.color" (ngModelChange)="edit(todo)">
+                                </ngx-colors>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ITodo } from 'src/app/shared/model/todo.interface';
 import { TodoService } from '../../shared/service/todo.service';
 @Component({
@@ -8,7 +9,9 @@ import { TodoService } from '../../shared/service/todo.service';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, AfterContentInit, OnDestroy {
+  @ViewChild("titleInp", { static: true }) titleInp!: ElementRef;
+  subscriptions: Subscription[] = [];
   formGroup!: FormGroup;
   todo!: ITodo;
   get title() {
@@ -44,12 +47,12 @@ export class FormComponent implements OnInit {
       this.color?.setValue('#fff59D')
       return;
     }
-    this.todoService.getTodo(+id).subscribe(resp => {
+    this.subscriptions.push(this.todoService.getTodo(+id).subscribe(resp => {
       if (resp) {
         this.todo = resp;
         this.setFormValue();
       }
-    })
+    }));
   }
   private setFormValue(): void {
     this.todo.tasks.forEach(val => {
@@ -100,5 +103,14 @@ export class FormComponent implements OnInit {
   }
   private back(): void {
     this.router.navigate(['/to-do'])
+  }
+  ngAfterContentInit(): void {
+    this.titleInp?.nativeElement.focus();
+  }
+  private unsub(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+  ngOnDestroy(): void {
+    this.unsub();
   }
 }

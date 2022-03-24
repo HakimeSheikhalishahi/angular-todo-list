@@ -20,7 +20,7 @@ export class TodoService implements ITodoService, ITaskService {
       ],
       color: '#ffe082',
       date: 'Wed Mar 23 2022 18:19:46 GMT+0430 (Iran Daylight Time)',
-      id: 1,
+      id: 13,
       complete: false,
     },
     {
@@ -37,7 +37,7 @@ export class TodoService implements ITodoService, ITaskService {
       ],
       color: '#ffeb3b',
       date: 'Wed Mar 23 2022 18:25:46 GMT+0430 (Iran Daylight Time)',
-      id: 2,
+      id: 12,
       complete: true,
     },
     {
@@ -49,7 +49,7 @@ export class TodoService implements ITodoService, ITaskService {
       ],
       color: '#9ccc65',
       date: 'Wed Mar 23 2022 18:30:26 GMT+0430 (Iran Daylight Time)',
-      id: 3,
+      id: 11,
     },
     {
       title: 'Email',
@@ -60,7 +60,7 @@ export class TodoService implements ITodoService, ITaskService {
       ],
       color: '#80deea',
       date: 'Wed Mar 23 2022 18:31:36 GMT+0430 (Iran Daylight Time)',
-      id: 4,
+      id: 10,
     },
     {
       title: 'Project',
@@ -72,7 +72,7 @@ export class TodoService implements ITodoService, ITaskService {
       ],
       color: '#ff9800',
       date: 'Wed Mar 23 2022 18:34:24 GMT+0430 (Iran Daylight Time)',
-      id: 5,
+      id: 9,
     },
     {
       title: 'Twiter',
@@ -80,7 +80,7 @@ export class TodoService implements ITodoService, ITaskService {
       tasks: [{ id: 18, title: 'Check twiter', done: true }],
       color: '#9fa8da',
       date: 'Wed Mar 23 2022 18:39:07 GMT+0430 (Iran Daylight Time)',
-      id: 6,
+      id: 8,
       complete: true,
     },
     {
@@ -101,7 +101,7 @@ export class TodoService implements ITodoService, ITaskService {
       ],
       color: '#02ff81',
       date: 'Wed Mar 23 2022 18:46:11 GMT+0430 (Iran Daylight Time)',
-      id: 8,
+      id: 6,
     },
     {
       title: 'Pharmacy',
@@ -115,7 +115,7 @@ export class TodoService implements ITodoService, ITaskService {
       ],
       color: '#00ffcb',
       date: 'Wed Mar 23 2022 18:53:33 GMT+0430 (Iran Daylight Time)',
-      id: 9,
+      id: 5,
     },
     {
       title: 'Designing',
@@ -123,7 +123,7 @@ export class TodoService implements ITodoService, ITaskService {
       tasks: [{ id: 27, title: 'Poster', done: true }],
       color: '#ffca28',
       date: 'Wed Mar 23 2022 18:55:57 GMT+0430 (Iran Daylight Time)',
-      id: 10,
+      id: 4,
       complete: true,
     },
     {
@@ -136,7 +136,7 @@ export class TodoService implements ITodoService, ITaskService {
       ],
       color: '#d4e157',
       date: 'Wed Mar 23 2022 18:58:15 GMT+0430 (Iran Daylight Time)',
-      id: 11,
+      id: 3,
       complete: true,
     },
     {
@@ -148,7 +148,7 @@ export class TodoService implements ITodoService, ITaskService {
       ],
       color: '#81f200',
       date: 'Wed Mar 23 2022 19:02:03 GMT+0430 (Iran Daylight Time)',
-      id: 12,
+      id: 2,
     },
     {
       title: 'Practice',
@@ -156,7 +156,7 @@ export class TodoService implements ITodoService, ITaskService {
       tasks: [{ id: 33, title: 'English' }],
       color: '#80cbc4',
       date: 'Wed Mar 23 2022 19:03:30 GMT+0430 (Iran Daylight Time)',
-      id: 13,
+      id: 1,
     },
   ];
   constructor() { }
@@ -190,7 +190,8 @@ export class TodoService implements ITodoService, ITaskService {
     return of('Deleted');
   }
   getTodos(): Observable<ITodo[]> {
-    return of(this.todos);
+    const sort = this.todos.sort((a, b) => b.id - a.id);
+    return of(sort);
   }
   addTodo(newTodo: ITodo): Observable<number> {
     newTodo.tasks.map(task => {
@@ -224,14 +225,16 @@ export class TodoService implements ITodoService, ITaskService {
     return of('Deleted');
   }
   public search(keyword: string): Observable<ITodo[]> {
+    const keyword_ = keyword.toLowerCase();
     const res = this.todos.filter((todo: ITodo) => {
-      if (todo.title?.includes(keyword) || todo.desc?.includes(keyword)) {
+      if (todo.title?.toLowerCase()?.includes(keyword_) || todo.desc?.toLowerCase()?.includes(keyword_)) {
         return todo;
       }
-      const some = todo.tasks.some(task => task.title?.includes(keyword));
+      const some = todo.tasks.some(task => task.title?.toLowerCase()?.includes(keyword_));
       return some;
     });
-    return of(res);
+    const sort = res.sort((a, b) => b.id - a.id);
+    return of(sort);
   }
   public checkComplete(todoForCheck: ITodo): Observable<string> {
     this.todos.map((todo: ITodo) => {

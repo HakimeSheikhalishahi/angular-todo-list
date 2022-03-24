@@ -1,89 +1,93 @@
 <div class="container pt-3">
     <div class="col-12">
+        <h5 *ngIf="!todo">
+            Add todo
+        </h5>
+        <h5 *ngIf="todo">
+            Edit Todo
+        </h5>
         <form [formGroup]="formGroup">
-            <div>
-                <div class="form-row">
-                    <!-- start title --------------->
-                    <div class="form-group required col-md-12">
-                        <label class="col-12 center-block required-label">
-                            Title
-                        </label>
-                        <div class="col-12">
-                            <input [class.is-invalid]="title?.dirty && !title?.valid" class="form-control"
-                                [placeholder]="'Enter title'" formControlName="title">
-                            <!--start error-->
-                            <div class="text-danger">
-                                <div *ngIf="(title?.invalid && (title?.dirty || title?.touched))" class="text-danger">
-                                    <small class="err-msg   " *ngIf="title?.hasError('required')">
-                                        Title is required
-                                    </small>
-                                </div>
+            <div class="form-row">
+                <!-- start title --------------->
+                <div class="form-group required col-md-12">
+                    <label class="col-12 center-block required-label">
+                        Title
+                    </label>
+                    <div class="col-12">
+                        <input #titleInp [class.is-invalid]="title?.dirty && !title?.valid" class="form-control"
+                            [placeholder]="'Enter title'" formControlName="title">
+                        <!--start error-->
+                        <div class="text-danger">
+                            <div *ngIf="(title?.invalid && (title?.dirty || title?.touched))" class="text-danger">
+                                <small class="err-msg   " *ngIf="title?.hasError('required')">
+                                    Title is required
+                                </small>
                             </div>
-                            <!--end error  -->
                         </div>
+                        <!--end error  -->
                     </div>
-                    <!-- end title --------------->
-                    <!-- start desc --------------->
-                    <div class="form-group col-md-12">
-                        <label class="col-12 center-block">
-                            Description
-                        </label>
-                        <div class="col-12">
-                            <textarea [class.is-invalid]="desc?.dirty && !desc?.valid" formControlName="desc"
-                                [rows]=" 5" class="form-control" placeholder="Enter description"></textarea>
-                        </div>
+                </div>
+                <!-- end title --------------->
+                <!-- start desc --------------->
+                <div class="form-group col-md-12">
+                    <label class="col-12 center-block">
+                        Description
+                    </label>
+                    <div class="col-12">
+                        <textarea [class.is-invalid]="desc?.dirty && !desc?.valid" formControlName="desc" [rows]=" 5"
+                            class="form-control" placeholder="Enter description"></textarea>
                     </div>
-                    <!-- end desc --------------->
-                    <!-- start task --------------->
-                    <div class="form-group col-md-12">
-                        <label class="col-12 center-block">
-                            Tasks
-                        </label>
-                        <div class="col-12">
-                            <div formArrayName="tasks">
-                                <div *ngFor="let task of tasks.controls; let i=index">
-                                    <div [formGroupName]="i">
-                                        Task title
-                                        {{i+1}}
-                                        :
-                                        <div class="d-flex flex-row">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" formControlName="title">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text bg-danger" (click)="removeTask(i)">
-                                                        <i class="bi bi-x-lg del-todo text-white"></i>
-                                                    </span>
-                                                </div>
+                </div>
+                <!-- end desc --------------->
+                <!-- start task --------------->
+                <div class="form-group col-md-12">
+                    <h6 class="col-12 center-block">
+                        Tasks
+                    </h6>
+                    <div class="col-12">
+                        <div formArrayName="tasks">
+                            <div *ngFor="let task of tasks.controls; let i=index">
+                                <div [formGroupName]="i">
+                                    Task title
+                                    {{i+1}}
+                                    :
+                                    <div class="d-flex flex-row">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" formControlName="title">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text bg-danger" (click)="removeTask(i)">
+                                                    <i class="bi bi-x-lg del-todo text-white"></i>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button class="btn  btn-secondary mt-2" type="button" (click)="addTask()">Add task
-                            <i class="bi bi-plus"></i>
-                        </button>
                     </div>
-                    <!-- end task --------------->
-                    <!-- start color --------------->
-                    <div class="form-group col-md-12">
-                        <label class="col-12 center-block">
-                            Color
-                        </label>
-                        <div class="col-12">
-                            <ngx-colors ngx-colors-trigger formControlName="color"></ngx-colors>
-
-                        </div>
-                    </div>
-                    <!-- end color --------------->
+                    <button class="btn  btn-secondary mt-2" type="button" (click)="addTask()">Add task
+                        <i class="bi bi-plus"></i>
+                    </button>
                 </div>
+                <!-- end task --------------->
+                <!-- start color --------------->
+                <div class="form-group col-md-12">
+                    <label class="col-12 center-block">
+                      Backgroud color
+                    </label>
+                    <div class="col-12">
+                        <ngx-colors ngx-colors-trigger formControlName="color"></ngx-colors>
+
+                    </div>
+                </div>
+                <!-- end color --------------->
             </div>
             <div class="col-12 d-flex flex-row pt-1 justify-content-center pb-1">
                 <button *ngIf="!todo" class="btn btn-primary mx-1" type="button" (click)="add()">Done</button>
                 <button *ngIf="!todo" class="btn btn-primary mx-1" type="button" (click)="add(true)">Done and
                     new</button>
                 <button *ngIf="todo" class="btn btn-primary mx-1" type="button" (click)="edit()">Edit</button>
-                <button class="btn btn-secondary" type="button" (click)="cancel()">Return</button>
+                <button class="btn btn-secondary" type="button" (mousedown)="cancel()">Cancel</button>
             </div>
         </form>
     </div>

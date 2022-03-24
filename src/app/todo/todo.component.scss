@@ -29,11 +29,11 @@
 }
 .list-group-item {
   .action {
-    display: none;
+    opacity: 0.5;
   }
   &:hover {
     .action {
-      display: inline;
+      opacity: 1;
       .bi:hover {
         color: red !important;
       }
