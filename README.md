@@ -2,7 +2,7 @@
 
 https://hakimesheikhalishahi.github.io/angular-todo-list/
 
-![Alt text](https://user-images.githubusercontent.com/51107856/159904898-9e3c639e-6e11-4939-80b8-9c3272c142d4.png?raw=true "Title")
+![Alt text](https://user-images.githubusercontent.com/51107856/159927007-db1e9262-b8e8-429f-9af9-beed0e88c0c8.png?raw=true "Title")
 
 
 # ToDoList
